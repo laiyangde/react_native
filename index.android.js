@@ -1,6 +1,7 @@
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
+ * @flow
  */
 
 import React, {
@@ -11,22 +12,24 @@ import React, {
   View
 } from 'react-native';
 
+import CodePush from "react-native-code-push";
+import Index from './gameBa3.0/';
+
 class GameBar extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
+
+  componentDidMount() {
+
+    CodePush.sync(
+        {updateDialog:true, installMode:CodePush.InstallMode.IMMEDIATE}
     );
   }
+
+  render() {
+    return (
+      <Index />
+    );
+  }
+
 }
 
 const styles = StyleSheet.create({

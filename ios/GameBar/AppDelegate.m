@@ -31,12 +31,12 @@
    * on the same Wi-Fi network.
    */
 
-//#ifdef DEBUG
-//  jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
+#ifdef DEBUG
+  jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
 //  jsCodeLocation = [NSURL URLWithString:@"http://192.168.1.39:8081/index.ios.bundle?platform=ios&dev=true"];
-//#else
+#else
   jsCodeLocation = [CodePush bundleURL];
-//#endif
+#endif
 
   /**
    * OPTION 2
