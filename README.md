@@ -1,2 +1,2 @@
 # react_native
-react native project
+下载完，在根目录下  运行npm install 安装依赖
