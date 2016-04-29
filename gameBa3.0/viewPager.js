@@ -19,7 +19,7 @@ export default class ViewPager extends Component {
   }
   render() {
     return (
-          <TabBar locked={true} renderTabBar={()=><TabBarButton />} >
+          <TabBar locked={true} renderTabBar={TabBarButton}>
                 <Home navigator={this.props.navigator}/>
                 <GiftLayoutAndroid navigator={this.props.navigator}/>
                 <Empty navigator={this.props.navigator}/>

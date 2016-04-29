@@ -7,8 +7,8 @@ import React, {
     InteractionManager,
     ScrollView
 } from 'react-native'
-import  {size} from "../util";
-var clientWidth=Dimensions.get('window').width
+import  {size,clientWidth,} from "../util"
+import StaticContainer from 'StaticContainer.react'
 export default class TabBar extends Component {
   static defaultProps = {
       tabBarPosition: 'bottom',
@@ -21,22 +21,10 @@ export default class TabBar extends Component {
 	      containerWidth: clientWidth,
       };
   }
-  componentWillReceiveProps(props) {
-    if (props.page >= 0 && props.page !== this.state.currentPage) {
-      this.goToPage(props.page);
-    }
-  }
   goToPage=(pageNumber)=>{
   	const offset = pageNumber * this.state.containerWidth;
   	this.scrollView.scrollTo({x: offset, y: 0,animated:false});
     this.setState({currentPage: pageNumber, });
-  }
-  renderTabBar=(props)=>{
-    if (this.props.renderTabBar) {
-      return React.cloneElement(this.props.renderTabBar(), props);
-    } else {
-      return null
-    }
   }
   renderScrollableContent=()=>{
   	return (
@@ -45,7 +33,7 @@ export default class TabBar extends Component {
           horizontal
           pagingEnabled
           automaticallyAdjustContentInsets={false}
-          style={styles.scrollableContentIOS}
+          style={[styles.scrollableContent,this.props.style]}
           contentContainerStyle={styles.flex}
           contentOffset={{ x: this.props.initialPage * this.state.containerWidth, }}
           ref={(scrollView) => { this.scrollView = scrollView; }}
@@ -57,11 +45,13 @@ export default class TabBar extends Component {
           keyboardDismissMode="on-drag"
           >
           {this.props.children.map((child, idx) => {
-            return <View
-              key={idx}
-              style={{width: this.state.containerWidth,}}>
-              {child}
-            </View>;
+            return <StaticContainer shouldUpdate={this.state.currentPage===idx} key={idx}>
+            <View
+              style={{width: this.state.containerWidth,}}
+              >
+              {this.state.currentPage===idx? child : null}
+            </View>
+            </StaticContainer>
           })}
         </ScrollView>
       );
@@ -76,15 +66,11 @@ export default class TabBar extends Component {
     }
   }
   render() {
-  	var _props={
-  		goToPage:this.goToPage,
-  		currentPage:this.state.currentPage
-  	}
     return (
     <View style={[styles.flex]} onLayout={this._handleLayout}>
-		{this.props.tabBarPosition==='top' && this.renderTabBar(_props)} 
+		{this.props.tabBarPosition==='top' && <this.props.renderTabBar goToPage={this.goToPage} currentPage={this.state.currentPage}/>} 
 		{this.renderScrollableContent()}
-		{this.props.tabBarPosition==='bottom' && this.renderTabBar(_props)} 
+		{this.props.tabBarPosition==='bottom' && <this.props.renderTabBar goToPage={this.goToPage} currentPage={this.state.currentPage}/>} 
     </View>
     )
   }
@@ -92,12 +78,12 @@ export default class TabBar extends Component {
 
 const styles = StyleSheet.create({
   flex:{
-	flex:1
+	 flex:1
   },
   scrollableContentContainerIOS: {
     flex: 1,
   },
-  scrollableContentIOS: {
+  scrollableContent: {
     flexDirection: 'column',
     marginBottom:-size(22)
   },

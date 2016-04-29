@@ -17,7 +17,7 @@ export default class Rank extends Component {
   
   render() {
     return (
-          <TabBar locked={true} tabBarPosition='top' renderTabBar={()=><Navtab />} >
+          <TabBar locked={true} tabBarPosition='top' renderTabBar={Navtab} >
                 <Hot />
                 <New />
                 <Ol />

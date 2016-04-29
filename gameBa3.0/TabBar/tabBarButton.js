@@ -8,7 +8,7 @@ import React, {
   Image,
   PixelRatio
 } from 'react-native'
-import {barIcon,barIconActive,clientWidth,styles as styles0,size,size10,size45,size120,size93,size20,tabBarData} from '../util'
+import {barIcon,barIconActive,clientWidth,styles as styles0,size,size10,size45,size120,size93,size20,tabBarData,size40} from '../util'
 export default class TabBarButton extends Component {
   _button=()=>{
     return ['首页','礼包','商城','活动','榜单'].map((text,index)=>{
@@ -19,7 +19,7 @@ export default class TabBarButton extends Component {
               source={this.props.currentPage==index ? barIconActive[index] : barIcon[index]} 
               resizeMode='stretch'
               />
-              <View style={{height:size20,justifyContent:'center'}}>
+              <View style={[{height:size40},styles0.center]}>
                   <Text style={[styles.font,this.props.currentPage==index ? styles.textActive :null ]}>{text}</Text>
               </View>
       </TouchableOpacity>
@@ -89,16 +89,14 @@ const styles = StyleSheet.create({
     borderRadius:size93
   },
   icon:{
-    marginBottom:size10,
     width:size45,
     height:size45
   },
   button:{
     alignItems:'center',
-    marginBottom:size10
   },
   button2:{
-    marginBottom:size20
+    marginBottom:size10
   },
   font:{    
     fontSize:size20,
