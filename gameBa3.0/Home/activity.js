@@ -6,7 +6,7 @@ import React, {
   TouchableHighlight,
   Image
 } from 'react-native'
-import {size,styles as styles0,size320,size150,clientWidth,size30,size20} from "../util";
+import {size,styles as styles0,size320,size150,clientWidth,size10,size20} from "../util";
 
 
 export default class Act extends Component {
@@ -82,7 +82,7 @@ var styles = StyleSheet.create({
     borderColor:'#ddd'
   },
   activityBorder:{
-    borderBottomWidth:size30,
+    borderBottomWidth:size10,
     borderTopWidth:size20,
     borderBottomColor:'#eee',
     borderTopColor:'#eee'

@@ -12,24 +12,43 @@ import Hot from './hot'
 import New from './new'
 import Ol from './ol'
 import Little from './little'
+class Rank extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+       isReady:false
+    };
+  } 
+  componentDidMount() {
+      this.setState({
+        isReady:true
+      })
+  }
+  render(){
+    return <View style={styles.flex}>
+          {
+            this.state.isReady && <TabBar locked={true} tabBarPosition='top' renderTabBar={Navtab} >
+                  <Hot />
+                  <New />
+                  <Ol />
+                  <Little />
+            </TabBar>
+          }
+          </View>
+  }
+}
 
-export default class Rank extends Component {
-  
+export default class RankBox extends Component {
+  shouldComponentUpdate(){
+    return false;
+  }
   render() {
-    return (
-          <TabBar locked={true} tabBarPosition='top' renderTabBar={Navtab} >
-                <Hot />
-                <New />
-                <Ol />
-                <Little />
-          </TabBar>
-    )
+    return <Rank />
   }
 }
 
 var styles = StyleSheet.create({
-  container: {
-    padding: 40,
+  flex: {
     flex: 1,
   }
 })

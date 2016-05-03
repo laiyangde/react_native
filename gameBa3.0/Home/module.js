@@ -6,7 +6,7 @@ import React, {
   TouchableOpacity,
   Image
 } from 'react-native'
-import {size10,size15,size20,size24,size30,size50,size120,size200,size,styles as styles0,size190,size210,size600,size110,ios} from '../util';
+import {size10,size15,size20,size24,size30,size50,size120,size200,size,styles as styles0,size190,size210,size600,size110,ios,piexl} from '../util';
 import WebView from './webview'
 export default class Modules extends Component {
   renderModule=()=>{
@@ -21,8 +21,8 @@ export default class Modules extends Component {
             case '4':
             //攻略／礼包／活动
             component = 
-              <View key={type} style={[styles.marginBorderBottom,index===last && styles.borderBottomNone]}>
-                <TouchableOpacity style={[styles0.pH20,styles0.pV30,styles0.row,styles.modulesBorder,index===0 && styles.borderTopNone,index===last && styles.borderBottomNone]} onPress={self.goto.bind(self,data)} activeOpacity={0.8}>
+              <View key={type} style={[styles.marginBorderTop,]}>
+                <TouchableOpacity style={[styles0.pH20,styles0.pV30,styles0.row,styles.modulesBorder,]} onPress={self.goto.bind(self,data)} activeOpacity={0.8}>
                   <Image source={{uri:singleUrl}} style={[styles.img200x120,{marginRight:size15}]}/>
                   <View style={styles0.flex}>
                     <Text style={styles.title} numberOfLines={1}>{title}</Text>
@@ -34,8 +34,8 @@ export default class Modules extends Component {
             case '7':
             //团购宣传
             component = 
-              <View key={type} style={[styles.marginBorderBottom,index===last && styles.borderBottomNone]}>
-                <TouchableOpacity style={[styles0.pH20,styles0.pV30,styles.modulesBorder,index===0 && styles.borderTopNone,index===last && styles.borderBottomNone]} onPress={self.goto.bind(self,data)} activeOpacity={0.8}>
+              <View key={type} style={[styles.marginBorderTop,]}>
+                <TouchableOpacity style={[styles0.pH20,styles0.pV30,styles.modulesBorder,]} onPress={self.goto.bind(self,data)} activeOpacity={0.8}>
                   <View style={{borderWidth:1,borderColor:'#ddd'}}>
                     <Image source={{uri:singleUrl}} style={[styles.img600x205,]}/>
                     <View style={[styles0.row,styles0.aCenter,styles0.pH20,styles0.pV20,{justifyContent:'space-between'}]}>
@@ -49,8 +49,8 @@ export default class Modules extends Component {
             case '5':
             //多图攻略
             component = 
-              <View key={type} style={[styles.marginBorderBottom,index===last && styles.borderBottomNone]}>
-                <TouchableOpacity style={[styles0.pH20,styles0.pV30,styles.modulesBorder,index===0 && styles.borderTopNone,index===last && styles.borderBottomNone]} onPress={self.goto.bind(self,data)} activeOpacity={0.8}>      
+              <View key={type} style={[styles.marginBorderTop,]}>
+                <TouchableOpacity style={[styles0.pH20,styles0.pV30,styles.modulesBorder,]} onPress={self.goto.bind(self,data)} activeOpacity={0.8}>      
                   <Text style={styles.title} numberOfLines={1}>{title}</Text>  
                   <Text style={[styles.desc,ios && {lineHeight:size30}]} numberOfLines={3}>{content}</Text>
                   <View style={[styles0.row,{justifyContent:'space-between'}]}>
@@ -65,8 +65,8 @@ export default class Modules extends Component {
             case '6':
             //专题
             component = 
-              <View key={type} style={[styles.marginBorderBottom,index===last && styles.borderBottomNone]}>
-                <TouchableOpacity style={[styles0.pH20,styles0.pV30,styles.modulesBorder,index===0 && styles.borderTopNone,index===last && styles.borderBottomNone]} onPress={self.goto.bind(self,data)} activeOpacity={0.8}>      
+              <View key={type} style={[styles.marginBorderTop,]}>
+                <TouchableOpacity style={[styles0.pH20,styles0.pV30,styles.modulesBorder,]} onPress={self.goto.bind(self,data)} activeOpacity={0.8}>      
                   <View style={[styles0.row,styles0.aCenter]}>
                     <Image style={styles.icon} source={{uri:icon}}/>
                     <Text style={[styles.title,styles0.flex]} numberOfLines={1}>{title}</Text>
@@ -80,8 +80,8 @@ export default class Modules extends Component {
             case '2':
             //视频
             component =
-              <View key={type} style={[styles.marginBorderBottom,index===last && styles.borderBottomNone]}>
-                <TouchableOpacity style={[styles0.pH20,styles0.pV30,styles0.row,styles.modulesBorder,index===0 && styles.borderTopNone,index===last && styles.borderBottomNone]} onPress={self.goto.bind(self,data)} activeOpacity={0.8}>
+              <View key={type} style={[styles.marginBorderTop,]}>
+                <TouchableOpacity style={[styles0.pH20,styles0.pV30,styles0.row,styles.modulesBorder,]} onPress={self.goto.bind(self,data)} activeOpacity={0.8}>
                   <View style={styles0.flex}>
                     <Text style={styles.title} numberOfLines={1}>{title}</Text>
                     <Text style={[styles.desc,ios && {lineHeight:size30}]} numberOfLines={2}>{content}</Text>
@@ -166,14 +166,14 @@ var styles = StyleSheet.create({
     marginTop:size10,
   },
   modulesBorder:{
-    borderTopWidth:1,
-    borderBottomWidth:1,
+    borderTopWidth:piexl,
+    borderBottomWidth:piexl,
     borderTopColor:'#ddd',
     borderBottomColor:'#ddd'
   },
-  marginBorderBottom:{
-    borderBottomWidth:size20,
-    borderBottomColor:'#eee'
+  marginBorderTop:{
+    borderTopWidth:size20,
+    borderTopColor:'#eee'
   },
   borderTopNone:{
     borderTopWidth:0

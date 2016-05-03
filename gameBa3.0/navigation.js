@@ -133,7 +133,7 @@ export default class Navigation extends Component {
                 return <Component navigator={nav} {...route.passProps}/>
             }}
             configureScene={() => {
-              return Navigator.SceneConfigs.FloatFromRight
+              return Navigator.SceneConfigs.FadeAndroid
             }}
             navigationBar={
                 <Navigator.NavigationBar
