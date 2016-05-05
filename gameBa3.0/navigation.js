@@ -24,7 +24,7 @@ import React, {
   Platform,
   PixelRatio,
 } from 'react-native'
-import {ios,styles as styles0,ArrowLeft,size80,size20,size,size115,size40} from './util'
+import {ios,styles as styles0,ArrowLeft,size80,size20,size,size115,size40,size45} from './util'
 var NavigationBarRouteMapper = {
 
   LeftButton: function(route, navigator, index, navState) {
@@ -67,19 +67,22 @@ var NavigationBarRouteMapper = {
                     </TouchableOpacity>
                     :null
                     }
-                {
-                  backButton ? 
-                  <TouchableOpacity style={[styles0.row,styles0.center,{height:size80,width:size115,paddingRight:size20}]} onPress={()=>{navigator.pop()}}>
-                  <ArrowLeft />
                   {
-                      backButtonTitle ? 
-                        <Text style={{marginLeft:size20}}>{backButtonTitle}</Text>
-                        :null
+                    backButton ? 
+                    <TouchableOpacity style={[styles0.row,styles0.center,{height:size80,width:size115,paddingRight:size20}]} onPress={()=>{navigator.pop()}}>
+                    <Image
+                            style={styles0.imgLeft}
+                            source={require('./images/back.png')}
+                          />
+                    {
+                        backButtonTitle ? 
+                          <Text style={{marginLeft:size20}}>{backButtonTitle}</Text>
+                          :null
                     }
-                  </TouchableOpacity>
-                  :null
+                    </TouchableOpacity>
+                    :null
 
-                }
+                  }
               
                 </View>
         )
@@ -110,8 +113,8 @@ var NavigationBarRouteMapper = {
   Title: function(route, navigator, index, navState) {
       var {title,titleStyle}=route
        return  (
-        <View style={[styles0.center,styles0.h80,ios ?null :{alignSelf:'center',flex:1,marginLeft:-72,marginTop:PixelRatio.getPixelSizeForLayoutSize(2)}]}>
-            <Text style={titleStyle}>{title ? title : null}</Text>
+        <View style={[styles0.center,styles0.h80,ios ?null :{alignSelf:'center',flex:1,marginLeft:-72,marginTop:PixelRatio.getPixelSizeForLayoutSize(2)},{paddingHorizontal:size45}]}>
+            <Text numberOfLines={1} style={titleStyle}>{title ? title : null}</Text>
         </View>
         )
       

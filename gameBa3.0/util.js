@@ -33,7 +33,7 @@ export const ios = Platform.OS === 'ios';
 export const [size10,size12,size15,size20,size24,size30,size36,size40,size45,size50,size80,size88,size93,size100,size110,size115,size120,size150,size190,size200,size210,size320,size600]=[size(10),size(12),size(15),size(20),size(24),size(30),size(36),size(40),size(45),size(50),size(80),size(88),size(93),size(100),size(110),size(115),size(120),size(150),size(190),size(200),size(210),size(320),size(600)]
 export const [homeData]=
 [
-    'http://test.card.gao7.com/yxb/YxbIndex?Ver=3&PlatForm=1',
+    'http://test.card.gao7.com/yxb/YxbIndex?Ver=3&PlatForm=1&PageSize=4',
 
 ]
 

@@ -11,9 +11,8 @@ import React, {
     AsyncStorage,
     TouchableOpacity
 } from 'react-native'
-import {getJSON,homeData,Loading,size88,size20,size24,clientHeight} from './util'
+import {getJSON,homeData,Loading,size88,size20,size24,clientHeight,styles as styles0} from './util'
 import StaticContainer from 'StaticContainer.react'
-var doubleClientHeight=clientHeight*2
 export default class Home extends Component {
     static defaultProps={
         threshold:clientHeight*2,
@@ -22,7 +21,7 @@ export default class Home extends Component {
     constructor(props) {
         super(props);
         this.loadingContent=[];
-        this.pageIndex=1;
+        this.pageIndex=0;
         this.state = {
             datas:null,
             loading:true,
@@ -30,42 +29,65 @@ export default class Home extends Component {
             shouldUpdate:true,
             showBackTop:false,
             loadingMore:false,
+            loadingTip:'加载中...'
         };
     }
     getData=(storageData)=>{
-
       var _self=this;
         getJSON(this.props.interface+'&pageIndex=0',(data)=>{
           data=data.Data;
           _self.loadingContent=[]; 
-          _self.pageIndex=1;
+          _self.pageIndex=0;
           if (storageData && storageData===JSON.stringify(data)) {
             _self.setState({
-                shouldUpdate:false
+                shouldUpdate:false,
+                loadingTip:'加载中...',
+                loadingMore:false
             })
             return;
           }
+          this.total=data.pageTotal;
           _self._setState(data)
           AsyncStorage.setItem(this.props.interface,JSON.stringify(data))
         })
     }
     loadingMore=()=>{
       var _self=this;
-        getJSON(this.props.interface+'&pageIndex='+this.pageIndex,(data)=>{
-            data=data.Data;
-            _self.loadingContent.push(<_self.props.renderLoadingMore datas={data[_self.props.loadingMoreDataName]} navigator={this.props.navigator} key={_self.pageIndex++}/>)
-            _self.setState({
+      var next=this.pageIndex+1
+      if(next>=this.total){
+        if(this.state.loadingTip==='加载中...'){
+          _self.setState({
               shouldUpdate:false,
-              loadingMore:false
+              loadingTip:'已经没有更多了'
+          })
+        }
+         return false
+      }
+      getJSON(this.props.interface+'&pageIndex='+next,(data)=>{
+          data=data.Data;
+          if(data[_self.props.loadingMoreDataName].length===0){
+            _self.setState({
+                shouldUpdate:false,
+                loadingTip:'已经没有更多了'
             })
-        })
+            _self.total=data.pageTotal;
+            return false            
+          }
+          _self.loadingContent.push(<_self.props.renderLoadingMore datas={data[_self.props.loadingMoreDataName]} navigator={this.props.navigator} key={_self.pageIndex=next}/>)
+          _self.setState({
+            shouldUpdate:false,
+            loadingMore:false
+          })
+      })
     }
     _setState=(data)=>{
       this.setState({
           datas:data,
           loading:false,
           isRefreshing:false,
-          shouldUpdate:true
+          shouldUpdate:true,
+          loadingTip:'加载中...',
+          loadingMore:false
       })
     }
     componentDidMount() {
@@ -97,13 +119,13 @@ export default class Home extends Component {
                   }}
                   style={styles.ScrollView} 
                   onScroll={(e)=>{
-                      if(e.nativeEvent.contentOffset.y>doubleClientHeight && this.state.showBackTop===false){
+                      if(e.nativeEvent.contentOffset.y>this.props.threshold && this.state.showBackTop===false){
                          this.setState({
                             shouldUpdate:false,
                             showBackTop:true
                          })
                       }
-                      if(e.nativeEvent.contentOffset.y<=doubleClientHeight && this.state.showBackTop===true){
+                      if(e.nativeEvent.contentOffset.y<=this.props.threshold && this.state.showBackTop===true){
                          this.setState({
                             shouldUpdate:false,
                             showBackTop:false
@@ -140,7 +162,7 @@ export default class Home extends Component {
                     </View>
                   </StaticContainer>
                   {this.loadingContent}
-                  {this.state.loadingMore && <View><Text>loading...</Text></View>}
+                  {this.state.loadingMore && <View style={[styles0.center,{marginBottom:size24}]}><Text>{this.state.loadingTip}</Text></View>}
                 </ScrollView>
                 {
                 this.state.showBackTop ? <TouchableOpacity activeOpacity={0.8} style={styles.backTop} onPress={this.backTop}>
