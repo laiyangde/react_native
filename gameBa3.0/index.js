@@ -4,6 +4,7 @@ import React, {
   Text,
   View,
   DrawerLayoutAndroid,
+  Navigator,
 } from 'react-native'
 
 import Empty from './empty'
@@ -13,8 +14,23 @@ import Navigation from './navigation'
 import {size,ios} from './util'
 import Side from './Home/side'
 
+export default class Index extends Component{
+    render(){
+        return(
+            <Navigator                
+                initialRoute={{
+                    component: IndexRender,
+                }}
+				renderScene={(route,nav)=>{
+                    var Component=route.component
+                    return <Component navigator={nav} {...route.passProps}/>
+                }}
+            />
+        )
+    }
+}
 
-export default class Index extends Component {
+class IndexRender extends Component {
   open=()=>{
     this.drawer.openDrawer()
   }
@@ -24,7 +40,7 @@ export default class Index extends Component {
       drawerLockMode={'locked-closed'}
       drawerWidth={size(500)}
       drawerPosition={ios?'left':DrawerLayoutAndroid.positions.Left}
-      renderNavigationView={()=><Side />}
+      renderNavigationView={()=><Side navigator={this.props.navigator}/>}
       ref={(drawer)=>{
         this.drawer=drawer;
       }}

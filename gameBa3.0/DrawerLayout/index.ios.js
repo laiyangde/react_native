@@ -13,7 +13,7 @@ const {
     State: TextInputState,
   },
 } = React;
-
+import StaticContainer from 'StaticContainer.react'
 const DEVICE_WIDTH = parseFloat(Dimensions.get('window').width);
 const THRESHOLD = DEVICE_WIDTH / 2;
 const VX_MAX = 0.1;
@@ -129,19 +129,22 @@ export default class DrawerLayout extends React.Component {
 
     return (
       <View style={{ flex: 1, backgroundColor: 'transparent' }} {...this._panResponder.panHandlers}>
+      <StaticContainer shouldUpdate={false}>
         <Animated.View style={styles.main}>
           {this.props.children}
         </Animated.View>
-
+      </StaticContainer>
         {drawerShown &&
           <TouchableWithoutFeedback onPress={this._onOverlayClick}>
             <Animated.View
               style={[styles.overlay, animatedOverlayStyles]} />
           </TouchableWithoutFeedback>
         }
+      <StaticContainer shouldUpdate={false}>
         <Animated.View style={[styles.drawer, dynamicDrawerStyles, animatedDrawerStyles]}>
           {this.props.renderNavigationView()}
         </Animated.View>
+      </StaticContainer>
       </View>
     );
   }

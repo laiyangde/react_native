@@ -22,7 +22,7 @@ export default class Home extends Component {
     constructor(props) {
         super(props);
         this.loadingContent=[];
-        this.pageSize=1;
+        this.pageIndex=1;
         this.state = {
             datas:null,
             loading:true,
@@ -35,10 +35,10 @@ export default class Home extends Component {
     getData=(storageData)=>{
 
       var _self=this;
-        getJSON(this.props.interface+'&pageSize=0',(data)=>{
+        getJSON(this.props.interface+'&pageIndex=0',(data)=>{
           data=data.Data;
           _self.loadingContent=[]; 
-          _self.pageSize=1;
+          _self.pageIndex=1;
           if (storageData && storageData===JSON.stringify(data)) {
             _self.setState({
                 shouldUpdate:false
@@ -51,9 +51,9 @@ export default class Home extends Component {
     }
     loadingMore=()=>{
       var _self=this;
-        getJSON(this.props.interface+'&pageSize='+this.pageSize,(data)=>{
+        getJSON(this.props.interface+'&pageIndex='+this.pageIndex,(data)=>{
             data=data.Data;
-            _self.loadingContent.push(<_self.props.renderLoadingMore datas={data[_self.props.loadingMoreDataName]} navigator={this.props.navigator} key={_self.pageSize++}/>)
+            _self.loadingContent.push(<_self.props.renderLoadingMore datas={data[_self.props.loadingMoreDataName]} navigator={this.props.navigator} key={_self.pageIndex++}/>)
             _self.setState({
               shouldUpdate:false,
               loadingMore:false

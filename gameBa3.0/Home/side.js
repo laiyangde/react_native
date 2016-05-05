@@ -9,11 +9,14 @@ import React, {
     ScrollView,
     TouchableHighlight,
     TouchableOpacity,
+    Navigator,
 } from 'react-native'
 
 import {size,styles as styles0,pixel} from '../util'
+import Login from '../Login'
+var ImagePickerManager = require('NativeModules').ImagePickerManager
 
-export default class Side extends Component{
+export default class SideRender extends Component{
     constructor(props) {
         super(props);
         this.state = {            
@@ -26,14 +29,54 @@ export default class Side extends Component{
     componentDidMount(){
         
     }
-    PressFunc(){
-        // this.props.navigator.push({
-    //   component: WebView,
-    //   title: data.recommendTitle,
-    //   passProps: {recommendLink:data.recommendLink},
-    //   backButton:true
-    // })
-    }  
+     
+    pressToLogin(){
+         this.props.navigator.push({
+            component: Login,
+         })
+    }
+    pressPhoto(){
+        const options = {
+            title: 'Photo Picker',
+            takePhotoButtonTitle: 'Take Photo...',
+            chooseFromLibraryButtonTitle: 'Choose from Library...',
+            quality: 0.5,
+            maxWidth: 300,
+            maxHeight: 300,
+            storageOptions: {
+                skipBackup: true
+            },
+            allowsEditing: true
+        };
+
+        ImagePickerManager.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled photo picker');
+            }
+            else if (response.error) {
+                console.log('ImagePickerManager Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                // You can display the image using either:
+                //const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
+                var source;
+                if (Platform.OS === 'android') {
+                source = {uri: response.uri, isStatic: true};
+                } else {
+                source = {uri: response.uri.replace('file://', ''), isStatic: true};
+                }
+
+                this.setState({
+                avatarSource: source
+                });
+            }
+        });
+    }
     infoRender(){
         if(this.state.loaded){            
             return(
@@ -60,7 +103,7 @@ export default class Side extends Component{
                 />
                 <View style={styles.content}>
                     <View style={styles.userWrap}>
-                        <TouchableOpacity  onPress={()=>this.pressPhoto()}>
+                        <TouchableOpacity  onPress={() => this.pressToLogin()}>
                             <View style={styles.photoWrap}>
                                 <Image 
                                     style={styles.photoBg}
