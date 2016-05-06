@@ -10,7 +10,7 @@ import React,{
     TextInput,
 } from 'react-native'
 
-import {size,ArrowLeft,pixel} from '../util'
+import {size,ArrowLeft,pixel,Header} from '../util'
 
 export default class Login extends Component{
     constructor(props){
@@ -32,14 +32,7 @@ export default class Login extends Component{
     render(){
         return(
             <View style={styles.container}>
-                <View style={styles.header}>
-                    <TouchableOpacity onPress={()=>{this.props.navigator.pop()}} style={styles.headerBack}>
-                        <ArrowLeft />
-                    </TouchableOpacity>
-                    <View style={styles.headerTitle}>
-                        <Text style={styles.title}>登录搞趣网</Text>
-                    </View>
-                </View>
+            <Header title='登录搞趣网' navigator={this.props.navigator} />
                 <View style={styles.loginWrap}>
                     <View style={[styles.inputWrap,styles.inputBottom]}>
                         <Image
@@ -117,26 +110,6 @@ var styles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor:'#ebedf0',
-    },
-    /* 头部 */
-    header:{
-        height:size(88),
-        backgroundColor:'#fff',
-        flexDirection:'row',
-        alignItems:'center',
-    },
-    headerBack:{
-        width:size(88),
-        alignItems:'center',
-    },
-    headerTitle:{
-        flex:1, 
-        alignItems:'center', 
-        marginLeft:-size(88),      
-    },
-    title:{
-        fontSize:size(40),
-        color:'#000'
     },
     
     /* 输入 */

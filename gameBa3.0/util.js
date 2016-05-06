@@ -132,74 +132,18 @@ export class Header extends Component {
         };
     }
     render(){
-       var {title,leftButtonTitle,onLeftButtonPress,leftButtonIcon,rightButtonTitle,onRightButtonPress,rightButtonIcon,titleTextColor,backButtonIcon,backButtonTitle,backButtonTitle,navigator,backButton}=this.props
-
+        var {navigator,title}=this.props;
         return(
-            <View style={[styles.header,styles.center]}>
-                {
-                    leftButtonIcon || leftButtonTitle && !backButton?
-                    <TouchableOpacity style={[styles.h_left,styles.row,styles.center]} onPress={onLeftButtonPress} >
-                    { leftButtonIcon?
-                        <Image
+            <View style={[{backgroundColor:'#fff'},ios && {paddingTop:25}]}>
+                <View style={[styles.h80,styles.center,styles.flex,{paddingHorizontal:size45}]}>
+                    <TouchableOpacity style={[styles.flex,styles.h80,{width:size115,position:'absolute',left:0,top:0,paddingRight:size20},styles.center]} onPress={()=>{this.props.navigator.pop()}}>
+                     <Image
                             style={styles.imgLeft}
-                            source={leftButtonIcon}
-                          />
-                          :null
-                    }
-                    {
-                      leftButtonTitle ? 
-                        <Text >{leftButtonTitle}</Text>
-                        :null
-                    }
-
+                            source={require('./images/back.png')}
+                          />                       
                     </TouchableOpacity>
-                    :null
-                }
-                {
-                    rightButtonIcon || rightButtonTitle?
-                    <TouchableOpacity style={[styles.h_right,styles.row,styles.center]} onPress={onRightButtonPress} >
-                    {
-                      rightButtonTitle ? 
-                        <Text >{rightButtonTitle}</Text>
-                        :null
-                    }
-                    { rightButtonIcon ? <Image
-                            style={styles.imgRight}
-                            source={rightButtonIcon}
-                          />
-                          :null
-                    }
-                    </TouchableOpacity>
-                    :null
-                }
-
-                {
-                    backButtonIcon || backButtonTitle && !backButton?
-                    <TouchableOpacity style={[styles.h_left,styles.row,styles.center]} onPress={()=>{navigator.pop()}} >
-                    {
-                      backButtonTitle ? 
-                        <Text >{backButtonTitle}</Text>
-                        :null
-                    }
-                    { backButtonIcon ? <Image
-                            style={styles.imgRight}
-                            source={backButtonIcon}
-                          />
-                          :null
-                    }
-                    </TouchableOpacity>
-                    :null
-                }
-                {
-                  backButton ? 
-                  <TouchableOpacity style={[styles.h_left,styles.row,styles.center]} onPress={()=>{navigator.pop()}}>
-                  <ArrowLeft /> 
-                  </TouchableOpacity>
-                  :null
-
-                }
-
-                <Text style={[{color:titleTextColor}]}>{title ? title : null}</Text>
+                    <Text numberOfLines={1} style={{fontSize:size40}}>{title}</Text>
+                </View>
             </View>
         )
     }
@@ -233,7 +177,6 @@ export const styles=StyleSheet.create({
     //弹出层背景
     alert:{backgroundColor:'rgba(0,0,0,.5)',position:'absolute',top:0,left:0},
     //Header
-    header:{height:size(69),backgroundColor:'#ddd',paddingTop:25},
     imgLeft:{width:size40,height:size40,marginRight:size20},
     imgRight:{width:size40,height:size40,marginLeft:size20},
     h_left:{position:'absolute',bottom:size(9),left:size20},
