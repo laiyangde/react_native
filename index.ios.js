@@ -14,7 +14,7 @@ import React, {
 
 import CodePush from "react-native-code-push";
 import Index from './gameBa3.0/';
-import Test from './example/animate/test3';
+import Test from './example/animate/test5';
 // var Test=require('./example/animate/test2')
 
 class GameBar extends Component {
@@ -28,8 +28,8 @@ class GameBar extends Component {
 
   render() {
     return (
-      <Index />
-      // <Test />
+      // <Index />
+      <Test />
     );
   }
 

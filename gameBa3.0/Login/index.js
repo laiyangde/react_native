@@ -8,9 +8,12 @@ import React,{
     Image,
     TouchableOpacity,
     TextInput,
+    AsyncStorage,
 } from 'react-native'
 
 import {size,ArrowLeft,pixel,Header} from '../util'
+import Md5 from 'crypto/md5'
+import Reg from './reg'
 
 export default class Login extends Component{
     constructor(props){
@@ -24,10 +27,40 @@ export default class Login extends Component{
         
     }
     linkToReg(){
-        
+        this.props.navigator.push({
+            component:Reg
+        })
     }
     otherLogin(type){
         
+    }
+    login(){
+        let userName = this.state.userText;
+        let md5Password = Md5.hex_md5(this.state.passwordText);       
+        fetch('http://udb.gao7.com/webapi/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: userName,
+                Password: md5Password,
+            })
+        })
+        .then((response) => response.text())
+        .then((responseText) => {
+            let result = JSON.parse(responseText.slice(1,-1));
+            if(result.ResultCode == "0"){
+                AsyncStorage.setItem('userInfo',responseText);                
+                this.props.navigator.pop();
+                this.props.refreshLoad(true); 
+            }            
+            
+        })
+        .catch((error) => {
+            console.warn(error);
+        });
     }
     render(){
         return(
@@ -63,14 +96,14 @@ export default class Login extends Component{
                     </View>
                 </View>
                 <View style={styles.loginLink}>
-                    <TouchableOpacity onPress={()=>this.linkToForget}>
+                    <TouchableOpacity onPress={()=>this.linkToForget()}>
                         <Text style={{fontSize:size(28)}}>忘记密码?</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.linkToReg}  style={{marginLeft:size(26)}}>
+                    <TouchableOpacity onPress={()=>this.linkToReg()}  style={{marginLeft:size(26)}}>
                         <Text style={{fontSize:size(28)}}>快速注册</Text>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={styles.loginButton}>
+                <TouchableOpacity style={styles.loginButton} onPress={()=>this.login()}>
                     <Text style={styles.loginButtonText}>登录</Text>
                 </TouchableOpacity>
                 <Text style={styles.agreement}>登录即表示你已阅读并同意《用户服务协议》</Text>
