@@ -24,26 +24,26 @@ export default class SideRender extends Component{
         super(props);
         this.state = {            
             loaded: false,
-            photoUrl:'',
+            photoUrl:' ',
             hasMessege:true,
-            nickName:'',
+            nickName:' ',
             Extcredits:0,
         };
     }
     
     componentDidMount(){
-        AsyncStorage.getItem('userInfo').then((data)=>{
-          let result = JSON.parse(data.slice(1,-1));
-          console.log(result)
-          this.setState({
-              loaded:true,
-              nickName:result.Data.NickName,
-              Extcredits:result.Data.BbsInfo.Extcredits5,
-              photoUrl:result.Data.PhotoUrl,
-          })
-        }).catch((err)=>{
-            console.log(err)
-        }) 
+        // AsyncStorage.getItem('userInfo').then((data)=>{
+        //   let result = JSON.parse(data.slice(1,-1));
+        //   console.log(result)
+        //   this.setState({
+        //       loaded:true,
+        //       nickName:result.Data.NickName,
+        //       Extcredits:result.Data.BbsInfo.Extcredits5,
+        //       photoUrl:result.Data.PhotoUrl,
+        //   })
+        // }).catch((err)=>{
+        //     console.log(err)
+        // }) 
     }
     pressFunc(){
         
@@ -53,19 +53,19 @@ export default class SideRender extends Component{
             loaded:loadState
         })
     }
-    pressSetup(){
-        this.props.navigator.push({
-            component: Logout,
-            passProps:{refreshLoad:this.refreshLoad},            
+    pressSetup=()=>{
+        this.props.navigator.push({            
+            passProps:{refreshLoad:this.refreshLoad}, 
+            component: Logout,           
          })
     }
-    pressToLogin(){
+    pressToLogin=()=>{
         if(this.state.loaded){
-            this.pressPhoto();
+            this.pressPhoto;
         }else{
-          this.props.navigator.push({
-            component: Login,
-            passProps:{refreshLoad:this.refreshLoad}, 
+          this.props.navigator.push({              
+            passProps:{refreshLoad:this.refreshLoad},
+            component: Login, 
          })  
         }
          
@@ -151,23 +151,24 @@ export default class SideRender extends Component{
                     style={styles.sideBg}
                     source={require('../images/sideBg.png')}
                 />
-                <View style={styles.content}>
-                    <View style={styles.userWrap}>
-                        <TouchableOpacity  onPress={() => this.pressToLogin()}>
-                            <View style={styles.photoWrap}>
-                                <Image 
-                                    style={styles.photoBg}
-                                    source={require('../images/photoBg.png')}
-                                />
-                                 {this.photoRender() } 
-                            </View>
-                        </TouchableOpacity>
-                        {this.infoRender()}
-                        
-                    </View>
+                <View style={styles.userWrap}>
+
+
+                    <TouchableOpacity  onPress={() => this.pressToLogin()}>
+                        <View style={styles.photoWrap}>
+                            <Image 
+                                style={styles.photoBg}
+                                source={require('../images/photoBg.png')}
+                            />
+                             {this.photoRender() } 
+                        </View>
+                    </TouchableOpacity>
+                    {this.infoRender()}
+                    
+                </View>
                     <View style={styles.moneyWrap}>
                         <View style={styles.moneyItem}>                 
-                            <TouchableHighlight underlayColor={'rgba(255,255,255,0.3)'} style={[styles0.flex]} onPress={()=>this.pressFunc()}>
+                            <TouchableHighlight underlayColor={'rgba(255,255,255,0.3)'} style={[styles0.flex]} onPress={this.pressPhoto}>
                                 <View style={[styles0.flex,styles0.center]}>
                                     <Text style={styles.moneyItemText}>1</Text>
                                     <Text style={styles.moneyItemName}>购物车</Text>
@@ -293,7 +294,6 @@ export default class SideRender extends Component{
                             </View>
                         </TouchableHighlight> 
                     </ScrollView>
-                </View>
             </View>
         )
     }
@@ -311,14 +311,10 @@ var styles = StyleSheet.create({
         left:0,
         resizeMode:'stretch',
     },
-    content:{
-        flex:1,
-    },
-    
     /* 个人信息 */
     userWrap:{
         marginTop:size(80),
-        height:size(144),
+        height:size(124),
         flexDirection:'row',      
     },
     photoWrap:{

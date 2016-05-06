@@ -28,8 +28,8 @@ class GameBar extends Component {
 
   render() {
     return (
-      // <Index />
-      <Test />
+      <Index />
+      // <Test />
     );
   }
 

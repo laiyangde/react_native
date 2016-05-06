@@ -12,7 +12,7 @@ import React,{
 } from 'react-native'
 
 import {size,ArrowLeft,pixel,Header} from '../util'
-import Md5 from 'crypto/md5'
+import Md5 from '../md5'
 import Reg from './reg'
 
 export default class Login extends Component{
@@ -52,9 +52,9 @@ export default class Login extends Component{
         .then((responseText) => {
             let result = JSON.parse(responseText.slice(1,-1));
             if(result.ResultCode == "0"){
-                AsyncStorage.setItem('userInfo',responseText);                
-                this.props.navigator.pop();
-                this.props.refreshLoad(true); 
+                AsyncStorage.setItem('userInfo',responseText);                 
+                this.props.refreshLoad(true);               
+                this.props.navigator.pop(); 
             }            
             
         })
